@@ -1,16 +1,20 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.10.1"
 
+set :rbenv_type, :user
+set :rbenv_ruby_version, 'ruby-2.3.0' # Edit this if you are using MRI Ruby
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :rbenv_roles, :all # default value
+
 set :application, 'deployment-rails'
 set :repo_url, 'git@github.com:Sujina-Saddival/deplyoment_rails.git' # Edit this to match your repository
 set :branch, :master
-set :deploy_to, '/home/ubuntu/urlshortner'
+set :deploy_to, '/home/deploy/urlshortner'
 set :pty, true
 set :linked_files, %w{config/database.yml config/application.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 set :keep_releases, 5
-set :rvm_type, :user
-set :rvm_ruby_version, 'ruby-2.2.3' # Edit this if you are using MRI Ruby
 
 set :puma_rackup, -> { File.join(current_path, 'config.ru') }
 set :puma_state, "#{shared_path}/tmp/pids/puma.state"
